@@ -1,0 +1,12 @@
+$steel-blue: #1b81da;
+$sky-blue: #7fcbebff;
+$ivory: #fcfae8ff;
+$vanilla: #e7edabff;
+
+$primary: $steel-blue;
+$secondary: $vanilla;
+$light: $ivory;
+$info: $sky-blue;
+
+// include bootstrap
+@import '../node_modules/bootstrap/scss/bootstrap.scss'

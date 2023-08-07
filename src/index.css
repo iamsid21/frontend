@@ -1,0 +1,34 @@
+:root {
+  --scrollbar-width: 7px;
+}
+
+html {
+  scrollbar-width: var(--scrollbar-width);
+  scrollbar-gutter: stable;
+}
+
+/* chrome support */
+::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+  height: 100vh;
+}
+
+::-webkit-scrollbar-thumb {
+  background: lightgray;
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 100vw;
+  min-height: 100%;
+  box-sizing: border-box;
+
+  overflow-x: hidden;
+
+}
+
+html, body, #root, .app {
+  min-height: 100vh;
+}
