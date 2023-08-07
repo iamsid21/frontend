@@ -1,17 +1,50 @@
 import "./Login.css";
 import React from "react";
 import { useAuth } from "../../contexts/authContext";
+import { useState } from "react";
 
 const Login = () => {
-  const { googleSignIn, currentUser, logout, getAdditionalUserInfoGoogle } = useAuth();
+  const { currentUser, login, googleSignIn, logout, getAdditionalUserInfoGoogle } = useAuth();
 
-  const handleGoogleSignUp = async (e) => {
+  const [signInDetails, setsignInDetails] = useState({
+    email: "",
+    password: ""
+  })
+
+  const handalInputChangeSignIn = (e) => {
+    const name = e.target.name
+    const value = e.target.value
+    // if (name === "email") {
+    //   const allValidations = {
+    //     isEmp: value === "",
+    //     isValid: /\S+@\S+\.\S+/.test(value),
+    //   }
+    //   setisValidSignIn({
+    //     ...isValidSignIn,
+    //     isEmailEmpty: allValidations.isEmp,
+    //     email: allValidations.isValid,
+    //   })
+    // } else if (name === "password") {
+    //   if (value === "") {
+    //     setisValidSignIn({ ...isValidSignIn, isPasswordEmpty: true })
+    //   } else {
+    //     setisValidSignIn({ ...isValidSignIn, isPasswordEmpty: false })
+    //   }
+    // } else {
+    //   if (value === "") {
+    //   } else {
+    //   }
+    // }
+    setsignInDetails({ ...signInDetails, [name]: value })
+  }
+
+  const handleSignIn = async (e) => {
     e.preventDefault();
     try {
-      const res = await googleSignIn();
-      console.log(res)
+      // const res = await googleSignIn();
+      // console.log(res)
+      console.log(signInDetails)
       console.log("user signed in")
-      navigate('/')
     } catch (error) {
       console.log(error)
     }
@@ -22,7 +55,7 @@ const Login = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 bg-white shadow-sm rounded-3">
+    <form onSubmit={handleSignIn} className="p-4 bg-white shadow-sm rounded-3">
       <div className="mb-3">
         <label htmlFor="exampleInputEmail1" className="form-label">
           Email address
@@ -33,6 +66,8 @@ const Login = () => {
           id="exampleInputEmail1"
           aria-describedby="emailHelp"
           placeholder="example@email.abc"
+          value={signInDetails.email}
+          onChange={handalInputChangeSignIn}
         />
       </div>
       <div className="mb-3">
@@ -43,6 +78,8 @@ const Login = () => {
           type="password"
           className="form-control"
           id="exampleInputPassword1"
+          value={signInDetails.password}
+          onChange={handalInputChangeSignIn}
         />
       </div>
       <button type="submit" className="btn btn-primary text-light">
