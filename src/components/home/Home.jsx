@@ -1,16 +1,16 @@
 import Login from "../Login/Login";
-import Navbar from "../Navbar/Navbar";
+// import Navbar from "../Navbar/Navbar";
 import "./Home.css";
 import React from "react";
 
 const Home = () => {
   return (
     <div className="home">
-      <div className="row">
+      {/* <div className="row">
         <div className="col">
           <Navbar />
         </div>
-      </div>
+      </div> */}
       <div className="row gap-2 p-4">
         <div className="col-7">
           <section>
