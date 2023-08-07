@@ -1,7 +1,22 @@
 import "./Login.css";
 import React from "react";
+import { useAuth } from "../../contexts/authContext";
 
 const Login = () => {
+  const { googleSignIn, currentUser, logout, getAdditionalUserInfoGoogle } = useAuth();
+
+  const handleGoogleSignUp = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await googleSignIn();
+      console.log(res)
+      console.log("user signed in")
+      navigate('/')
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const handleSubmit = () => {
     console.log("Login Form Submitted :P");
   };
@@ -31,7 +46,7 @@ const Login = () => {
         />
       </div>
       <button type="submit" className="btn btn-primary text-light">
-        Submit
+        Log In
       </button>
     </form>
   );
