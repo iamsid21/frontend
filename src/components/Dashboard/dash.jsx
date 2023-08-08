@@ -1,17 +1,37 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Dash.css";
+import { useAuth } from "../../contexts/authContext";
 
 
 const Dashboard = () => {
   const [data, setData] = useState([]);
   const [allSec, setAllSec] = useState(0);
   const [matSec, setMatSec] = useState(0);
-  const [runSec, setRunSec] = useState(0);
-  const [userSec, setUserSec] = useState(0);
 
+  const [isManager, setIsManager] = useState(false);
+
+
+  const {
+    currentUser,
+    login,
+    googleSignIn,
+    logout,
+    getAdditionalUserInfoGoogle,
+  } = useAuth();
     
-  const fetchData = async () => {
+  const handleSignOut = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await logout();
+      // console.log(res)
+      console.log("user signed out");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchDataManager = async () => {
     try {
       const res = await axios.get(
         "http://localhost:9006/security/getAllSecurities"
@@ -25,7 +45,21 @@ const Dashboard = () => {
     }
   };
 
-  const fetchCount = async () => {
+  const fetchDataUser = async () => {
+    try {
+      const res = await axios.post(
+        "http://localhost:9006/security/getAllSecuritiesByUserId",
+        {userId: currentUser.uid}
+      ).then((res)=>{
+        setData(res.data.result);
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchCountManager = async () => {
+    
     try {
         axios.get(
           "http://localhost:9006/security/getCountOfAllSecurities"
@@ -44,9 +78,38 @@ const Dashboard = () => {
       } 
   };
 
+  const fetchCountUser = async () => {
+    try {
+        axios.post(
+          "http://localhost:9006/security/getCountOfAllSecuritiesByUserId",
+          {userId: currentUser.uid}
+        ).then((cntAll)=>{
+          setAllSec(cntAll.data.result[0].count);
+        })
+
+        axios.post(
+            "http://localhost:9006/security/getCountOfMaturedBonds",
+            {userId: currentUser.uid}
+          ).then((cntMat)=>{
+            setMatSec(cntMat.data.result[0].count);
+          })
+      } catch (error) {
+        console.log(error);
+      } 
+  };
+
   useEffect(() => {
-    fetchData();
-    fetchCount();
+    console.log(currentUser.email, currentUser.uid)
+    if(currentUser.email=='manager@gmail.com') {
+        setIsManager(true)
+        fetchDataManager();
+        fetchCountManager();
+    }
+    else {
+        fetchDataUser();
+        fetchCountUser();
+    }
+    
   }, []);
 
   if (data == undefined) {
@@ -98,7 +161,7 @@ const Dashboard = () => {
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="/" onClick={handleSignOut}>
                       <i class="bi bi-box-arrow-left"></i> Logout
                     </a>
                   </li>
