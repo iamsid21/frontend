@@ -98,6 +98,40 @@ const Dashboard = () => {
       } 
   };
 
+  const fetchManagerTrades = async (secId) => {
+    try {
+        axios.post(
+            "http://localhost:9006/security/getAllTradesForSecurity",
+            {securityId: secId}
+        ).then((res) => {
+            // setTrade(cnt)
+            console.log(res.data.result)
+        })
+    } catch (error) {
+        console.log(error);
+    }
+  };
+
+  const fetchUserTrades = async (secId) => {
+    try {
+        axios.post(
+            "http://localhost:9006/security/getAllTradesForUsersSecurity",
+            {userId: currentUser.uid, securityId: secId}
+        ).then((res) => {
+            // setTrade(cnt)
+            console.log(res.data.result)
+        })
+    } catch (error) {
+        console.log(error);
+    }
+  };
+
+  const fetchTrades = (secId) => {
+    if(isManager) fetchManagerTrades(secId);
+    else fetchUserTrades(secId);
+  }
+
+
   useEffect(() => {
     console.log(currentUser.email, currentUser.uid)
     if(currentUser.email=='manager@gmail.com') {
@@ -308,7 +342,7 @@ const Dashboard = () => {
                       <tbody>
                         {data?.map((sec) => {
                               return (
-                                <tr>
+                                <tr onClick={()=>fetchTrades(sec.security_id)} className="cursor-pointer">
                                   <td>
                                     <div class="text-heading font-semibold" href="#">
                                       {sec.security_id}
