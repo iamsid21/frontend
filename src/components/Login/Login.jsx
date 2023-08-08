@@ -1,11 +1,27 @@
 import "./Login.css";
-import React from "react";
+import React, { useEffect } from "react";
 import { useAuth } from "../../contexts/authContext";
 import { useState } from "react";
-import {useNavigate} from 'react-router-dom'
-
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 const Login = () => {
-  const navigate = useNavigate() ;
+  const fetchData = async () => {
+    try {
+      const body = { securityId: "S1" };
+      const res = await axios.post(
+        "http://localhost:9006/security/getSecurityById",
+        body,
+      );
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const navigate = useNavigate();
 
   const {
     currentUser,
@@ -54,7 +70,7 @@ const Login = () => {
       // console.log(res)
       console.log(signInDetails);
       console.log("user signed in");
-      navigate('/dash')
+      navigate("/dash");
     } catch (error) {
       console.log(error);
     }
