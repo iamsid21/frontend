@@ -2,3 +2,22 @@
 
 /* Bootstrap Icons */
 @import url("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.4.0/font/bootstrap-icons.min.css");
+
+.modal-content {
+    background-color: #fafafa;
+    padding: 1rem;
+    overflow-x: scroll;
+    border-radius: 1rem !important;
+
+    width: 84vw !important;
+    margin: 0 -25vw !important;
+}
+
+.modal-body {
+    transform: scale(0.9) translateX(-10%);
+}
+
+.modal-content::-webkit-scrollbar {
+    height: 5px;
+    width: 3px;
+}

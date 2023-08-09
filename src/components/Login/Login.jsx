@@ -4,7 +4,6 @@ import { useAuth } from "../../contexts/authContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
 const Login = () => {
   const fetchData = async () => {
     try {
@@ -93,7 +92,7 @@ const Login = () => {
     <>
       <form
         onSubmit={handleSignIn}
-        className="p-4 bg-white shadow-sm rounded-3"
+        className="p-4 mt-5"
       >
         <div className="mb-3">
           <label htmlFor="exampleInputEmail1" className="form-label">
@@ -127,7 +126,7 @@ const Login = () => {
           Log In
         </button>
       </form>
-      <button
+      {/* <button
         onClick={() => {
           console.log(currentUser.email);
         }}
@@ -135,7 +134,7 @@ const Login = () => {
         {" "}
         Click Me{" "}
       </button>
-      <button onClick={handleSignOut}> Log Out </button>
+      <button onClick={handleSignOut}> Log Out </button> */}
     </>
   );
 };
